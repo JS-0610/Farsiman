@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    List<Prueba1.Models.EditColaboradorViewModel> LstColaboradores = ViewBag.Colaboradores;
+    List<Prueba1.Models.SucursalViewModel> LstSucursales = ViewBag.Sucursal;
+}
+<div style="display: grid; align-items: center; justify-items: center;">
+    <div style="
+    display: grid;
+    align-items: center;
+    justify-items: flex-start;
+    border: solid lightgrey;
+    width: 300px;
+    margin: 15px;
+    padding: 5px;
+    border-radius: 10px;
+">
+        Colaborador:
+        <select id="selectColaborador" style="margin-bottom: 5px;">
+            <option value="default">-Seleccione un Colaborador-</option>
+            @foreach (var cElement in LstColaboradores)
+            {
+                <option value="@cElement.Id" data-oculto="@cElement.SucursalId">@cElement.Nombre</option>
+            }
+        </select>
+        Sucursal Asignada:
+        <select id="selectSucursal" style="margin-bottom: 5px;">
+            <option value="default">-Seleccione una Sucursal-</option>
+            @foreach (var sElement in LstSucursales)
+            {
+                <option value='@sElement.Id'>@sElement.Nombre</option>
+            }
+        </select>
+
+        Distancia que Recorre:
+        <input type="text" placeholder="Recorrido(KM)" id="recorrido" style="margin-bottom: 15px;" />
+        <input type="button" value="Cambiar" onclick="Cambiar()" style="margin-bottom: 5px;"/>
+    </div>
+</div>
+@section scripts{
+
+    <script>
+        function Cambiar() {
+            var ColaboradorId = document.getElementById("selectColaborador").value;
+            var SucursalId = document.getElementById("selectSucursal").value;
+            var recorrido = document.getElementById("recorrido").value;
+
+            if (parseInt(ColaboradorId)) {
+                ColaboradorId = parseInt(ColaboradorId);
+            } else {
+                alert("Selecciona un Colaborador");
+                return;
+            }
+            if (parseInt(SucursalId)) {
+                SucursalId = parseInt(SucursalId);
+            } else {
+                alert("Selecciona una Sucursal");
+                return;
+            }
+            if (parseFloat(recorrido) && parseFloat(recorrido) < 30 && parseFloat(recorrido)>0) {
+                recorrido = parseInt(recorrido);
+            } else {
+                alert("Ingrese un valor de Recorrido valido, Mayor a 0 y Menor a 30");
+                return;
+            }
+            var url = "@Url.Content("~/Asignar/Edit")";
+            var oParam = "{ 'idC': '" + ColaboradorId + "','idS': '" + SucursalId + "','recorrido': '" + recorrido + "' }";
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: oParam,
+                contentType: "application/json",
+                success: function (data) {
+                    if (data == "1") {
+                        alert("Colaborador Modificado");
+                        location.reload();
+                    } else {
+                        alert(data);
+                    }
+                }
+            });
+        }
+    </script>
+}

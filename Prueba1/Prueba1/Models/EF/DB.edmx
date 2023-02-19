@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FarsimanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbColaborador">
+          <Key>
+            <PropertyRef Name="colaborador_id" />
+          </Key>
+          <Property Name="colaborador_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="sucursal_id" Type="int" />
+          <Property Name="recorrido" Type="float" />
+        </EntityType>
+        <EntityType Name="tbSucursal">
+          <Key>
+            <PropertyRef Name="sucursal_id" />
+          </Key>
+          <Property Name="sucursal_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="20" />
+          <Property Name="ubicacion" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="tbTransporte">
+          <Key>
+            <PropertyRef Name="trasnporte_id" />
+          </Key>
+          <Property Name="trasnporte_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="unidad" Type="int" />
+          <Property Name="conductor" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbUsuarios">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" />
+          <Property Name="pass" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="tbViajes">
+          <Key>
+            <PropertyRef Name="viaje_id" />
+          </Key>
+          <Property Name="viaje_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="transporte_id" Type="int" />
+          <Property Name="colaborador_id" Type="int" />
+          <Property Name="fecha" Type="date" />
+          <Property Name="recorrido" Type="float" />
+          <Property Name="pago" Type="float" />
+        </EntityType>
+        <Association Name="FK_tbColaborador_tbSucursal">
+          <End Role="tbSucursal" Type="Self.tbSucursal" Multiplicity="0..1" />
+          <End Role="tbColaborador" Type="Self.tbColaborador" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbSucursal">
+              <PropertyRef Name="sucursal_id" />
+            </Principal>
+            <Dependent Role="tbColaborador">
+              <PropertyRef Name="sucursal_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbViajes_tbColaborador">
+          <End Role="tbColaborador" Type="Self.tbColaborador" Multiplicity="0..1" />
+          <End Role="tbViajes" Type="Self.tbViajes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbColaborador">
+              <PropertyRef Name="colaborador_id" />
+            </Principal>
+            <Dependent Role="tbViajes">
+              <PropertyRef Name="colaborador_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbViajes_tbTransporte">
+          <End Role="tbTransporte" Type="Self.tbTransporte" Multiplicity="0..1" />
+          <End Role="tbViajes" Type="Self.tbViajes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbTransporte">
+              <PropertyRef Name="trasnporte_id" />
+            </Principal>
+            <Dependent Role="tbViajes">
+              <PropertyRef Name="transporte_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FarsimanModelStoreContainer">
+          <EntitySet Name="tbColaborador" EntityType="Self.tbColaborador" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbSucursal" EntityType="Self.tbSucursal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbTransporte" EntityType="Self.tbTransporte" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbUsuarios" EntityType="Self.tbUsuarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbViajes" EntityType="Self.tbViajes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tbColaborador_tbSucursal" Association="Self.FK_tbColaborador_tbSucursal">
+            <End Role="tbSucursal" EntitySet="tbSucursal" />
+            <End Role="tbColaborador" EntitySet="tbColaborador" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbViajes_tbColaborador" Association="Self.FK_tbViajes_tbColaborador">
+            <End Role="tbColaborador" EntitySet="tbColaborador" />
+            <End Role="tbViajes" EntitySet="tbViajes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbViajes_tbTransporte" Association="Self.FK_tbViajes_tbTransporte">
+            <End Role="tbTransporte" EntitySet="tbTransporte" />
+            <End Role="tbViajes" EntitySet="tbViajes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FarsimanModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbSucursal">
+          <Key>
+            <PropertyRef Name="sucursal_id" />
+          </Key>
+          <Property Name="sucursal_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ubicacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbColaborador" Relationship="FarsimanModel.FK_tbColaborador_tbSucursal" FromRole="tbSucursal" ToRole="tbColaborador" />
+        </EntityType>
+        <EntityType Name="tbTransporte">
+          <Key>
+            <PropertyRef Name="trasnporte_id" />
+          </Key>
+          <Property Name="trasnporte_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="unidad" Type="Int32" />
+          <Property Name="conductor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbViajes" Relationship="Self.FK_tbViajes_tbTransporte" FromRole="tbTransporte" ToRole="tbViajes" />
+        </EntityType>
+        <EntityType Name="tbUsuarios">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pass" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbViajes">
+          <Key>
+            <PropertyRef Name="viaje_id" />
+          </Key>
+          <Property Name="viaje_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="transporte_id" Type="Int32" />
+          <Property Name="colaborador_id" Type="Int32" />
+          <Property Name="fecha" Type="DateTime" Precision="0" />
+          <Property Name="recorrido" Type="Double" />
+          <Property Name="pago" Type="Double" />
+          <NavigationProperty Name="tbTransporte" Relationship="Self.FK_tbViajes_tbTransporte" FromRole="tbViajes" ToRole="tbTransporte" />
+          <NavigationProperty Name="tbColaborador" Relationship="FarsimanModel.FK_tbViajes_tbColaborador" FromRole="tbViajes" ToRole="tbColaborador" />
+        </EntityType>
+        <Association Name="FK_tbViajes_tbTransporte">
+          <End Role="tbTransporte" Type="Self.tbTransporte" Multiplicity="0..1" />
+          <End Role="tbViajes" Type="Self.tbViajes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbTransporte">
+              <PropertyRef Name="trasnporte_id" />
+            </Principal>
+            <Dependent Role="tbViajes">
+              <PropertyRef Name="transporte_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FarsimanEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbSucursal" EntityType="Self.tbSucursal" />
+          <EntitySet Name="tbTransporte" EntityType="Self.tbTransporte" />
+          <EntitySet Name="tbUsuarios" EntityType="Self.tbUsuarios" />
+          <EntitySet Name="tbViajes" EntityType="Self.tbViajes" />
+          <AssociationSet Name="FK_tbViajes_tbTransporte" Association="Self.FK_tbViajes_tbTransporte">
+            <End Role="tbTransporte" EntitySet="tbTransporte" />
+            <End Role="tbViajes" EntitySet="tbViajes" />
+          </AssociationSet>
+          <EntitySet Name="tbColaborador" EntityType="FarsimanModel.tbColaborador" />
+          <AssociationSet Name="FK_tbColaborador_tbSucursal" Association="FarsimanModel.FK_tbColaborador_tbSucursal">
+            <End Role="tbSucursal" EntitySet="tbSucursal" />
+            <End Role="tbColaborador" EntitySet="tbColaborador" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbViajes_tbColaborador" Association="FarsimanModel.FK_tbViajes_tbColaborador">
+            <End Role="tbColaborador" EntitySet="tbColaborador" />
+            <End Role="tbViajes" EntitySet="tbViajes" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tbColaborador">
+          <Key>
+            <PropertyRef Name="colaborador_id" />
+          </Key>
+          <Property Name="colaborador_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sucursal_id" Type="Int32" />
+          <Property Name="recorrido" Type="Double" />
+          <NavigationProperty Name="tbSucursal" Relationship="FarsimanModel.FK_tbColaborador_tbSucursal" FromRole="tbColaborador" ToRole="tbSucursal" />
+          <NavigationProperty Name="tbViajes" Relationship="FarsimanModel.FK_tbViajes_tbColaborador" FromRole="tbColaborador" ToRole="tbViajes" />
+        </EntityType>
+        <Association Name="FK_tbColaborador_tbSucursal">
+          <End Type="FarsimanModel.tbSucursal" Role="tbSucursal" Multiplicity="0..1" />
+          <End Type="FarsimanModel.tbColaborador" Role="tbColaborador" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbSucursal">
+              <PropertyRef Name="sucursal_id" />
+            </Principal>
+            <Dependent Role="tbColaborador">
+              <PropertyRef Name="sucursal_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbViajes_tbColaborador">
+          <End Type="FarsimanModel.tbColaborador" Role="tbColaborador" Multiplicity="0..1" />
+          <End Type="FarsimanModel.tbViajes" Role="tbViajes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbColaborador">
+              <PropertyRef Name="colaborador_id" />
+            </Principal>
+            <Dependent Role="tbViajes">
+              <PropertyRef Name="colaborador_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FarsimanModelStoreContainer" CdmEntityContainer="FarsimanEntities">
+          <EntitySetMapping Name="tbSucursal">
+            <EntityTypeMapping TypeName="FarsimanModel.tbSucursal">
+              <MappingFragment StoreEntitySet="tbSucursal">
+                <ScalarProperty Name="sucursal_id" ColumnName="sucursal_id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="ubicacion" ColumnName="ubicacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbTransporte">
+            <EntityTypeMapping TypeName="FarsimanModel.tbTransporte">
+              <MappingFragment StoreEntitySet="tbTransporte">
+                <ScalarProperty Name="trasnporte_id" ColumnName="trasnporte_id" />
+                <ScalarProperty Name="unidad" ColumnName="unidad" />
+                <ScalarProperty Name="conductor" ColumnName="conductor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbUsuarios">
+            <EntityTypeMapping TypeName="FarsimanModel.tbUsuarios">
+              <MappingFragment StoreEntitySet="tbUsuarios">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbViajes">
+            <EntityTypeMapping TypeName="FarsimanModel.tbViajes">
+              <MappingFragment StoreEntitySet="tbViajes">
+                <ScalarProperty Name="viaje_id" ColumnName="viaje_id" />
+                <ScalarProperty Name="transporte_id" ColumnName="transporte_id" />
+                <ScalarProperty Name="colaborador_id" ColumnName="colaborador_id" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="recorrido" ColumnName="recorrido" />
+                <ScalarProperty Name="pago" ColumnName="pago" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbColaborador">
+            <EntityTypeMapping TypeName="FarsimanModel.tbColaborador">
+              <MappingFragment StoreEntitySet="tbColaborador">
+                <ScalarProperty Name="recorrido" ColumnName="recorrido" />
+                <ScalarProperty Name="sucursal_id" ColumnName="sucursal_id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="colaborador_id" ColumnName="colaborador_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

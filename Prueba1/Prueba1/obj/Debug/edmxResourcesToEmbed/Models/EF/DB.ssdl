@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FarsimanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tbColaborador">
+    <Key>
+      <PropertyRef Name="colaborador_id" />
+    </Key>
+    <Property Name="colaborador_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" />
+    <Property Name="sucursal_id" Type="int" />
+    <Property Name="recorrido" Type="float" />
+  </EntityType>
+  <EntityType Name="tbSucursal">
+    <Key>
+      <PropertyRef Name="sucursal_id" />
+    </Key>
+    <Property Name="sucursal_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="20" />
+    <Property Name="ubicacion" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="tbTransporte">
+    <Key>
+      <PropertyRef Name="trasnporte_id" />
+    </Key>
+    <Property Name="trasnporte_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="unidad" Type="int" />
+    <Property Name="conductor" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tbUsuarios">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="username" Type="varchar" MaxLength="50" />
+    <Property Name="pass" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="tbViajes">
+    <Key>
+      <PropertyRef Name="viaje_id" />
+    </Key>
+    <Property Name="viaje_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="transporte_id" Type="int" />
+    <Property Name="colaborador_id" Type="int" />
+    <Property Name="fecha" Type="date" />
+    <Property Name="recorrido" Type="float" />
+    <Property Name="pago" Type="float" />
+  </EntityType>
+  <Association Name="FK_tbColaborador_tbSucursal">
+    <End Role="tbSucursal" Type="Self.tbSucursal" Multiplicity="0..1" />
+    <End Role="tbColaborador" Type="Self.tbColaborador" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbSucursal">
+        <PropertyRef Name="sucursal_id" />
+      </Principal>
+      <Dependent Role="tbColaborador">
+        <PropertyRef Name="sucursal_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbViajes_tbColaborador">
+    <End Role="tbColaborador" Type="Self.tbColaborador" Multiplicity="0..1" />
+    <End Role="tbViajes" Type="Self.tbViajes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbColaborador">
+        <PropertyRef Name="colaborador_id" />
+      </Principal>
+      <Dependent Role="tbViajes">
+        <PropertyRef Name="colaborador_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbViajes_tbTransporte">
+    <End Role="tbTransporte" Type="Self.tbTransporte" Multiplicity="0..1" />
+    <End Role="tbViajes" Type="Self.tbViajes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbTransporte">
+        <PropertyRef Name="trasnporte_id" />
+      </Principal>
+      <Dependent Role="tbViajes">
+        <PropertyRef Name="transporte_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FarsimanModelStoreContainer">
+    <EntitySet Name="tbColaborador" EntityType="Self.tbColaborador" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbSucursal" EntityType="Self.tbSucursal" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbTransporte" EntityType="Self.tbTransporte" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbUsuarios" EntityType="Self.tbUsuarios" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbViajes" EntityType="Self.tbViajes" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_tbColaborador_tbSucursal" Association="Self.FK_tbColaborador_tbSucursal">
+      <End Role="tbSucursal" EntitySet="tbSucursal" />
+      <End Role="tbColaborador" EntitySet="tbColaborador" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbViajes_tbColaborador" Association="Self.FK_tbViajes_tbColaborador">
+      <End Role="tbColaborador" EntitySet="tbColaborador" />
+      <End Role="tbViajes" EntitySet="tbViajes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbViajes_tbTransporte" Association="Self.FK_tbViajes_tbTransporte">
+      <End Role="tbTransporte" EntitySet="tbTransporte" />
+      <End Role="tbViajes" EntitySet="tbViajes" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

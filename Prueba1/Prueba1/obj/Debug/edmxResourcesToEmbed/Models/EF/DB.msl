@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FarsimanModelStoreContainer" CdmEntityContainer="FarsimanEntities">
+    <EntitySetMapping Name="tbSucursal">
+      <EntityTypeMapping TypeName="FarsimanModel.tbSucursal">
+        <MappingFragment StoreEntitySet="tbSucursal">
+          <ScalarProperty Name="sucursal_id" ColumnName="sucursal_id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="ubicacion" ColumnName="ubicacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbTransporte">
+      <EntityTypeMapping TypeName="FarsimanModel.tbTransporte">
+        <MappingFragment StoreEntitySet="tbTransporte">
+          <ScalarProperty Name="trasnporte_id" ColumnName="trasnporte_id" />
+          <ScalarProperty Name="unidad" ColumnName="unidad" />
+          <ScalarProperty Name="conductor" ColumnName="conductor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbUsuarios">
+      <EntityTypeMapping TypeName="FarsimanModel.tbUsuarios">
+        <MappingFragment StoreEntitySet="tbUsuarios">
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="pass" ColumnName="pass" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbViajes">
+      <EntityTypeMapping TypeName="FarsimanModel.tbViajes">
+        <MappingFragment StoreEntitySet="tbViajes">
+          <ScalarProperty Name="viaje_id" ColumnName="viaje_id" />
+          <ScalarProperty Name="transporte_id" ColumnName="transporte_id" />
+          <ScalarProperty Name="colaborador_id" ColumnName="colaborador_id" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="recorrido" ColumnName="recorrido" />
+          <ScalarProperty Name="pago" ColumnName="pago" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbColaborador">
+      <EntityTypeMapping TypeName="FarsimanModel.tbColaborador">
+        <MappingFragment StoreEntitySet="tbColaborador">
+          <ScalarProperty Name="recorrido" ColumnName="recorrido" />
+          <ScalarProperty Name="sucursal_id" ColumnName="sucursal_id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="colaborador_id" ColumnName="colaborador_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3a2b7bb233ba49d2b630f1d6ffdbe362" Name="Diagram1">
+        <EntityTypeShape EntityType="FarsimanModel.tbSucursal" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FarsimanModel.tbTransporte" Width="1.5" PointX="7.375" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="FarsimanModel.tbUsuarios" Width="1.5" PointX="2.625" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FarsimanModel.tbViajes" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="FarsimanModel.FK_tbViajes_tbTransporte" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FarsimanModel.tbColaborador" Width="1.5" PointX="3" PointY="0.75" />
+        <AssociationConnector Association="FarsimanModel.FK_tbColaborador_tbSucursal" />
+        <AssociationConnector Association="FarsimanModel.FK_tbViajes_tbColaborador" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

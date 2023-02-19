@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewBag.Title = "Registrar Viajes";
+    List<Prueba1.Models.TransporteViewModel> LstTransporte = ViewBag.Transporte;
+    List<Prueba1.Models.SucursalViewModel> LstSucursal = ViewBag.Sucursal;
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    Unidad de Transporte
+    <select id="selectTransporte">
+        <option value="default">-Seleccione un Transporte-</option>
+        @foreach (var tElement in LstTransporte)
+        {
+            <option value="@tElement.Id">@tElement.Unidad - @tElement.Conductor</option>
+        }
+    </select>
+
+    Sucursal
+    <select id="selectSucursal" onchange="MostrarDatos()">
+        <option value="default">-Seleccione una Sucursal-</option>
+        @foreach (var sElement in LstSucursal)
+        {
+            <option value="@sElement.Id">@sElement.Nombre</option>
+        }
+    </select>
+
+    <input style="margin-left:20px" type="button" onclick="Enviar()" value="Registrar Viaje"/>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <table class="table table-bordered">
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Recorrido (KM)</th>
+                <th>Acciones</th>
+            </tr>
+        <tbody id="bodyTable">
+
+        </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        var record = [];
+        function MostrarDatos() {
+            var sucursalId = document.getElementById("selectSucursal").value;
+            var tbody = document.getElementById("bodyTable");
+            if (sucursalId != "default") {
+                url = "@Url.Content("~/Travel/GetColaboradores")" + "/" + sucursalId;
+                $.post(url, function (data) {
+                    console.log(data);
+                    tbody.innerHTML = "";
+                    data.forEach(function (element, index) {
+                        n = index + 1;
+                        record[element.Id] = element.Recorrido;
+                        tbody.innerHTML += "<tr><td>" + n + "</td> <td>" + element.Nombre + "</td><td>" + element.Recorrido + " KM</td><td><input type='checkbox' value="+element.Id+" name='colaboradores'></td></tr>";
+
+                    });
+                })
+            } else {
+                tbody.innerHTML = "";
+            }
+
+        }
+
+        function Enviar() {
+            var sucursalId = document.getElementById("selectSucursal").value;
+            var transporteId = document.getElementById("selectTransporte").value;
+            var recorrido = []
+
+            if (transporteId != "default" && sucursalId != "default") {
+                var valoresCheck = [];
+                $("input[type=checkbox]:checked").each(function () {
+                    valoresCheck.push(this.value);
+                     recorrido.push(record[this.value]);
+                });
+                if (valoresCheck.length == 0) {
+                    alert("Por Favor Seleccione un Colaborador");
+                } else {
+                    var count = valoresCheck.length;
+                    for (var i = 0; i < count;i++) {
+                        var url = "@Url.Content("~/Travel/SetViaje")";
+                        var oParam = "{ 'idTransporte': '" + transporteId + "','valoresCheck': '" + valoresCheck[i] + "','recorrido': '" + recorrido[i] + "' }";
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            data: oParam,
+                            contentType: "application/json",
+                            success: function (data) {
+                                if (data == "1") {
+                                    alert("Viaje Registrado");
+                                } else {
+                                    alert(data);
+                                }
+                            }
+                        });
+                        
+                    }
+                    
+                }
+               
+            } else {
+                if (sucursalId == "default") {
+                    alert("Por Favor Seleccione una sucursal");
+                }
+                if (transporteId == "default") {
+                    alert("Por Favor Seleccione una unidad de Transporte");
+                }
+            }
+            console.log(valoresCheck);
+            console.log(recorrido);
+        }
+
+    </script>
+    
+
+}

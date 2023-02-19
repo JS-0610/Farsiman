@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<div style="display: grid; align-items: center; justify-items: center;">
+    <div class="row" >
+        
+        <form id="frm" >
+            
+            <div style="
+                        display: grid;
+                        align-items: center;
+                        justify-items: flex-start;
+                        border: solid lightgrey;
+                        width: auto;
+                        margin: 15px;
+                        padding: 35px;
+                        border-radius: 10px;">
+                <div style="display: grid;align-items: center;justify-items: center;width: 100%;">
+                    <label style="font-size: large;">Login</label>
+                </div>
+                Usuario
+                <input type="text" name="user" />
+
+                Password
+                <input type="password" name="password" />
+                <input type="submit" class="btn btn-success" value="Entrar" />
+            </div>
+        </form>
+
+    </div>
+</div>
+    @section scripts{
+        <script>
+
+    $(document).ready(function(e){
+        $("#frm").submit(function (e){
+            e.preventDefault();
+
+            url = "@Url.Content("~/Access/Login")";
+            parametros = $(this).serialize();
+            $.post(url,parametros,function (data){
+
+                if(data=="1"){
+                    document.location.href =  "@Url.Content("~/")"
+                }
+                else {
+                    alert(data);
+                }
+            })
+
+        })
+
+
+    })
+
+        </script>
+    }
