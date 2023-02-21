@@ -131,7 +131,9 @@
     <Compile Include="Controllers\AccessController.cs" />
     <Compile Include="Controllers\AsignarController.cs" />
     <Compile Include="Controllers\ReporterController.cs" />
+    <Compile Include="Controllers\TransportistaController.cs" />
     <Compile Include="Controllers\TravelController.cs" />
+    <Compile Include="Encrypt\Encrypt.cs" />
     <Compile Include="Filter\VerifySession.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -227,6 +229,9 @@
     <Content Include="Views\Travel\Index.cshtml" />
     <Content Include="Views\Reporter\Index.cshtml" />
     <Content Include="Views\Asignar\Index.cshtml" />
+    <Content Include="Views\Transportista\Index.cshtml" />
+    <Content Include="Views\Transportista\Reporte.cshtml" />
+    <Content Include="Views\Transportista\Detalle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

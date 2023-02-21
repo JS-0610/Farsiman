@@ -70,14 +70,16 @@ namespace Prueba1.Controllers
         {
             try
             {
+                
                 using (FarsimanEntities db = new FarsimanEntities())
                 {
+                    var oTrans = db.tbTransporte.Find(idTransporte);
                     tbViajes oViaje = new tbViajes();
                     oViaje.transporte_id = idTransporte;
                     oViaje.colaborador_id = valoresCheck;
                     oViaje.fecha = DateTime.Now.Date;
                     oViaje.recorrido = recorrido;
-                    oViaje.pago = recorrido * 10;
+                    oViaje.pago = recorrido * oTrans.tarifa;
 
                     db.tbViajes.Add(oViaje);            
                     db.SaveChanges();                 

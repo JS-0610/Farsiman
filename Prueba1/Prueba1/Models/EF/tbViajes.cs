@@ -21,7 +21,7 @@ namespace Prueba1.Models.EF
         public Nullable<double> recorrido { get; set; }
         public Nullable<double> pago { get; set; }
     
-        public virtual tbTransporte tbTransporte { get; set; }
         public virtual tbColaborador tbColaborador { get; set; }
+        public virtual tbTransporte tbTransporte { get; set; }
     }
 }

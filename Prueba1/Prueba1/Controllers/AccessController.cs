@@ -12,6 +12,7 @@ namespace Prueba1.Controllers
         // GET: Access
         public ActionResult Index()
         {
+            
             return View();
         }
 
@@ -19,10 +20,11 @@ namespace Prueba1.Controllers
         {
             try
             {
-                using(FarsimanEntities db = new FarsimanEntities())
+                string passConvert = Encrypt.Encrypt.GetCodingPass(password);
+                using (FarsimanEntities db = new FarsimanEntities())
                 {
                     var lst = from d in db.tbUsuarios
-                              where d.username == user && d.pass == password
+                              where d.username == user && d.pass == passConvert
                               select d;
                     if(lst.Count() > 0)
                     {

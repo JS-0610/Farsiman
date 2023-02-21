@@ -29,6 +29,9 @@
           <Property Name="trasnporte_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="unidad" Type="int" />
           <Property Name="conductor" Type="varchar" MaxLength="50" />
+          <Property Name="tarifa" Type="float" />
+          <Property Name="bono" Type="float" />
+          <Property Name="meta" Type="int" />
         </EntityType>
         <EntityType Name="tbUsuarios">
           <Key>
@@ -36,7 +39,7 @@
           </Key>
           <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="username" Type="varchar" MaxLength="50" />
-          <Property Name="pass" Type="varchar" MaxLength="10" />
+          <Property Name="pass" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="tbViajes">
           <Key>
@@ -117,23 +120,6 @@
           <Property Name="ubicacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tbColaborador" Relationship="FarsimanModel.FK_tbColaborador_tbSucursal" FromRole="tbSucursal" ToRole="tbColaborador" />
         </EntityType>
-        <EntityType Name="tbTransporte">
-          <Key>
-            <PropertyRef Name="trasnporte_id" />
-          </Key>
-          <Property Name="trasnporte_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="unidad" Type="Int32" />
-          <Property Name="conductor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tbViajes" Relationship="Self.FK_tbViajes_tbTransporte" FromRole="tbTransporte" ToRole="tbViajes" />
-        </EntityType>
-        <EntityType Name="tbUsuarios">
-          <Key>
-            <PropertyRef Name="user_id" />
-          </Key>
-          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="pass" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="tbViajes">
           <Key>
             <PropertyRef Name="viaje_id" />
@@ -144,30 +130,12 @@
           <Property Name="fecha" Type="DateTime" Precision="0" />
           <Property Name="recorrido" Type="Double" />
           <Property Name="pago" Type="Double" />
-          <NavigationProperty Name="tbTransporte" Relationship="Self.FK_tbViajes_tbTransporte" FromRole="tbViajes" ToRole="tbTransporte" />
           <NavigationProperty Name="tbColaborador" Relationship="FarsimanModel.FK_tbViajes_tbColaborador" FromRole="tbViajes" ToRole="tbColaborador" />
+          <NavigationProperty Name="tbTransporte" Relationship="FarsimanModel.FK_tbViajes_tbTransporte" FromRole="tbViajes" ToRole="tbTransporte" />
         </EntityType>
-        <Association Name="FK_tbViajes_tbTransporte">
-          <End Role="tbTransporte" Type="Self.tbTransporte" Multiplicity="0..1" />
-          <End Role="tbViajes" Type="Self.tbViajes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbTransporte">
-              <PropertyRef Name="trasnporte_id" />
-            </Principal>
-            <Dependent Role="tbViajes">
-              <PropertyRef Name="transporte_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="FarsimanEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tbSucursal" EntityType="Self.tbSucursal" />
-          <EntitySet Name="tbTransporte" EntityType="Self.tbTransporte" />
-          <EntitySet Name="tbUsuarios" EntityType="Self.tbUsuarios" />
           <EntitySet Name="tbViajes" EntityType="Self.tbViajes" />
-          <AssociationSet Name="FK_tbViajes_tbTransporte" Association="Self.FK_tbViajes_tbTransporte">
-            <End Role="tbTransporte" EntitySet="tbTransporte" />
-            <End Role="tbViajes" EntitySet="tbViajes" />
-          </AssociationSet>
           <EntitySet Name="tbColaborador" EntityType="FarsimanModel.tbColaborador" />
           <AssociationSet Name="FK_tbColaborador_tbSucursal" Association="FarsimanModel.FK_tbColaborador_tbSucursal">
             <End Role="tbSucursal" EntitySet="tbSucursal" />
@@ -175,6 +143,12 @@
           </AssociationSet>
           <AssociationSet Name="FK_tbViajes_tbColaborador" Association="FarsimanModel.FK_tbViajes_tbColaborador">
             <End Role="tbColaborador" EntitySet="tbColaborador" />
+            <End Role="tbViajes" EntitySet="tbViajes" />
+          </AssociationSet>
+          <EntitySet Name="tbUsuarios" EntityType="FarsimanModel.tbUsuarios" />
+          <EntitySet Name="tbTransporte" EntityType="FarsimanModel.tbTransporte" />
+          <AssociationSet Name="FK_tbViajes_tbTransporte" Association="FarsimanModel.FK_tbViajes_tbTransporte">
+            <End Role="tbTransporte" EntitySet="tbTransporte" />
             <End Role="tbViajes" EntitySet="tbViajes" />
           </AssociationSet>
         </EntityContainer>
@@ -213,6 +187,38 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tbUsuarios">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pass" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbTransporte">
+          <Key>
+            <PropertyRef Name="trasnporte_id" />
+          </Key>
+          <Property Name="trasnporte_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="unidad" Type="Int32" />
+          <Property Name="conductor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tarifa" Type="Double" />
+          <Property Name="bono" Type="Double" />
+          <Property Name="meta" Type="Int32" />
+          <NavigationProperty Name="tbViajes" Relationship="FarsimanModel.FK_tbViajes_tbTransporte" FromRole="tbTransporte" ToRole="tbViajes" />
+        </EntityType>
+        <Association Name="FK_tbViajes_tbTransporte">
+          <End Type="FarsimanModel.tbTransporte" Role="tbTransporte" Multiplicity="0..1" />
+          <End Type="FarsimanModel.tbViajes" Role="tbViajes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbTransporte">
+              <PropertyRef Name="trasnporte_id" />
+            </Principal>
+            <Dependent Role="tbViajes">
+              <PropertyRef Name="transporte_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -225,24 +231,6 @@
                 <ScalarProperty Name="sucursal_id" ColumnName="sucursal_id" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="ubicacion" ColumnName="ubicacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbTransporte">
-            <EntityTypeMapping TypeName="FarsimanModel.tbTransporte">
-              <MappingFragment StoreEntitySet="tbTransporte">
-                <ScalarProperty Name="trasnporte_id" ColumnName="trasnporte_id" />
-                <ScalarProperty Name="unidad" ColumnName="unidad" />
-                <ScalarProperty Name="conductor" ColumnName="conductor" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbUsuarios">
-            <EntityTypeMapping TypeName="FarsimanModel.tbUsuarios">
-              <MappingFragment StoreEntitySet="tbUsuarios">
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="pass" ColumnName="pass" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -265,6 +253,27 @@
                 <ScalarProperty Name="sucursal_id" ColumnName="sucursal_id" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="colaborador_id" ColumnName="colaborador_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbUsuarios">
+            <EntityTypeMapping TypeName="FarsimanModel.tbUsuarios">
+              <MappingFragment StoreEntitySet="tbUsuarios">
+                <ScalarProperty Name="pass" ColumnName="pass" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbTransporte">
+            <EntityTypeMapping TypeName="FarsimanModel.tbTransporte">
+              <MappingFragment StoreEntitySet="tbTransporte">
+                <ScalarProperty Name="meta" ColumnName="meta" />
+                <ScalarProperty Name="bono" ColumnName="bono" />
+                <ScalarProperty Name="tarifa" ColumnName="tarifa" />
+                <ScalarProperty Name="conductor" ColumnName="conductor" />
+                <ScalarProperty Name="unidad" ColumnName="unidad" />
+                <ScalarProperty Name="trasnporte_id" ColumnName="trasnporte_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -10,24 +10,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tbTransporte">
-      <EntityTypeMapping TypeName="FarsimanModel.tbTransporte">
-        <MappingFragment StoreEntitySet="tbTransporte">
-          <ScalarProperty Name="trasnporte_id" ColumnName="trasnporte_id" />
-          <ScalarProperty Name="unidad" ColumnName="unidad" />
-          <ScalarProperty Name="conductor" ColumnName="conductor" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tbUsuarios">
-      <EntityTypeMapping TypeName="FarsimanModel.tbUsuarios">
-        <MappingFragment StoreEntitySet="tbUsuarios">
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
-          <ScalarProperty Name="username" ColumnName="username" />
-          <ScalarProperty Name="pass" ColumnName="pass" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="tbViajes">
       <EntityTypeMapping TypeName="FarsimanModel.tbViajes">
         <MappingFragment StoreEntitySet="tbViajes">
@@ -47,6 +29,27 @@
           <ScalarProperty Name="sucursal_id" ColumnName="sucursal_id" />
           <ScalarProperty Name="nombre" ColumnName="nombre" />
           <ScalarProperty Name="colaborador_id" ColumnName="colaborador_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbUsuarios">
+      <EntityTypeMapping TypeName="FarsimanModel.tbUsuarios">
+        <MappingFragment StoreEntitySet="tbUsuarios">
+          <ScalarProperty Name="pass" ColumnName="pass" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbTransporte">
+      <EntityTypeMapping TypeName="FarsimanModel.tbTransporte">
+        <MappingFragment StoreEntitySet="tbTransporte">
+          <ScalarProperty Name="meta" ColumnName="meta" />
+          <ScalarProperty Name="bono" ColumnName="bono" />
+          <ScalarProperty Name="tarifa" ColumnName="tarifa" />
+          <ScalarProperty Name="conductor" ColumnName="conductor" />
+          <ScalarProperty Name="unidad" ColumnName="unidad" />
+          <ScalarProperty Name="trasnporte_id" ColumnName="trasnporte_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

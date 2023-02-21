@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "Transportista";
+    List<Prueba1.Models.TransporteViewModel> LstTransporte = ViewBag.Transporte;
+}
+<div style="display: grid; align-items: center; justify-items: center;">
+    <div style="
+    display: grid;
+    align-items: center;
+    justify-items: flex-start;
+    border: solid lightgrey;
+    width: 300px;
+    margin: 15px;
+    padding: 5px;
+    border-radius: 10px;
+">
+        
+            Unidad de Transporte:
+            <select id="selectTransporte" style="margin-bottom: 15px";>
+                <option value="default">-Seleccione un Transporte-</option>
+                @foreach (var tElement in LstTransporte)
+                {
+                    <option value="@tElement.Id">@tElement.Unidad - @tElement.Conductor</option>
+                }
+            </select>
+            Tarifa por KM:
+            <input type="number" min="0" step="0.1" placeholder="Tarifa (Lempiras)" id="tarifa" style="margin-bottom: 15px;" />
+            Bono por meta cumplida:
+            <input type="number" min="0" step="0.1" placeholder="Bono (Lempiras)" id="bono" style="margin-bottom: 15px;" />
+            Meta de viajes:
+            <input type="number" min="0" placeholder="Numero de Viajes" id="meta" style="margin-bottom: 15px;" />
+            <input style="margin-left:20px" type="button" onclick="Cambiar()" value="Cambiar Transportista" />
+        
+    </div>
+</div>
+@section scripts{
+
+    <script>
+        function Cambiar() {
+            var TransporteID = document.getElementById("selectTransporte").value;
+            var Tarifa = document.getElementById("tarifa").value;
+            var Bono = document.getElementById("bono").value;
+            var Meta = document.getElementById("meta").value;
+
+            if (parseInt(TransporteID)) {
+                TransporteID = parseInt(TransporteID);
+            } else {
+                alert("Selecciona una Unidad de Transporte");
+                return;
+            }
+            if (!parseFloat(Tarifa) || parseFloat(Tarifa) < 0) {
+                alert("Ingrese un monto de Tarifa válido");
+                return;
+            }
+            if (!parseFloat(Bono) || parseFloat(Bono) < 0) {
+                alert("Ingrese un monto de Bono válido");
+                return;
+            }
+            if (parseInt(Meta) || parseFloat(Meta) < 0) {
+                Meta = parseInt(Meta);
+            } else {
+                alert("Ingrese una Meta válida");
+                return;
+            }
+            var url = "@Url.Content("~/Transportista/Edit")";
+            var oParam = "{ 'idT': '" + TransporteID + "','tarifa': '" + Tarifa + "','bono': '" + Bono + "','meta': '" + Meta + "' }";
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: oParam,
+                contentType: "application/json",
+                success: function (data) {
+                    if (data == "1") {
+                        alert("Transportista Modificado");
+                        location.reload();
+                    } else {
+                        alert(data);
+                    }
+                }
+            });
+        }
+    </script>
+}

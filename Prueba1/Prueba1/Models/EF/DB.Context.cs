@@ -26,9 +26,9 @@ namespace Prueba1.Models.EF
         }
     
         public virtual DbSet<tbSucursal> tbSucursal { get; set; }
-        public virtual DbSet<tbTransporte> tbTransporte { get; set; }
-        public virtual DbSet<tbUsuarios> tbUsuarios { get; set; }
         public virtual DbSet<tbViajes> tbViajes { get; set; }
         public virtual DbSet<tbColaborador> tbColaborador { get; set; }
+        public virtual DbSet<tbUsuarios> tbUsuarios { get; set; }
+        public virtual DbSet<tbTransporte> tbTransporte { get; set; }
     }
 }

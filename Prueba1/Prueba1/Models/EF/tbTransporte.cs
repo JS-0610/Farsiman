@@ -23,6 +23,9 @@ namespace Prueba1.Models.EF
         public int trasnporte_id { get; set; }
         public Nullable<int> unidad { get; set; }
         public string conductor { get; set; }
+        public Nullable<double> tarifa { get; set; }
+        public Nullable<double> bono { get; set; }
+        public Nullable<int> meta { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbViajes> tbViajes { get; set; }

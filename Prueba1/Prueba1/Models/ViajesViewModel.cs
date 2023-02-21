@@ -16,4 +16,11 @@ namespace Prueba1.Models
 
 
     }
+
+    public class ViajesTransporteModel
+    {
+        public int? transporte_id { get; set; }
+        public double? Recorrido { get; set; }
+        public double? Pago { get; set; }
+    }
 }
